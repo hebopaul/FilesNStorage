@@ -27,7 +27,7 @@ class MainViewModel(
     }
 
     fun getFileList(): List<File> {
-        val files = File(context.filesDir, "files").listFiles()
+        val files = File(context.filesDir, "").listFiles()
         files?.forEach {
             Log.d("File Read:", it.absolutePath.toString())
         }

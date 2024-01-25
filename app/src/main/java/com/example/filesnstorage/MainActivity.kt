@@ -1,5 +1,7 @@
 package com.example.filesnstorage
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -9,15 +11,20 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.filesnstorage.ui.theme.FilesNStorageTheme
@@ -25,6 +32,7 @@ import com.example.filesnstorage.ui.theme.FilesNStorageTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             FilesNStorageTheme {
@@ -92,10 +100,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ListFiles(mVM: MainViewModel) {
-    LazyColumn {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(20.dp)) {
         //present all the uri paths of our list
-        items( mVM.getFileList().size ) { filePath ->
-            Text(text = filePath.toString())
+        items(items = mVM.getFileList()) { filePath ->
+            Button(onClick = {
+                mVM.updateSelectedImageUri(filePath.toUri())
+            }) {
+                Text(text = filePath.toString())
+            }
         }
 
     }
