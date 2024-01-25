@@ -1,6 +1,5 @@
 package com.example.filesnstorage
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -15,17 +14,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.filesnstorage.ui.theme.FilesNStorageTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     onResult = { uri ->
                         uri?.let {
                             mVM.updateSelectedImageUri(uri)
-                            val selectedImage = BitmapFactory.decodeFile(mVM.selectedImageUri?.path)
+                            val selectedImage = uri.toBitmap(this@MainActivity)
                             if (selectedImage != null) {
                                 mVM.saveImageToInternal(selectedImage, uri.lastPathSegment.toString())
                             } else {
